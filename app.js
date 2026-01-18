@@ -635,9 +635,32 @@ function renderAll() {
 // Marked.js is loaded from CDN in HTML
 // Lucide is loaded from CDN in HTML
 
+// Floating bubble scroll tracking (for iframe compatibility)
+function initFloatingBubbleTracking() {
+  const bubble = document.getElementById('floatingBubble');
+  if (!bubble) return;
+
+  // Use absolute positioning instead of fixed for scroll tracking
+  bubble.style.position = 'absolute';
+
+  function updateBubblePosition() {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const viewportHeight = window.innerHeight;
+    const newTop = scrollTop + (viewportHeight / 2);
+    bubble.style.top = newTop + 'px';
+    bubble.style.transform = 'translateY(-50%)';
+  }
+
+  // Update on scroll
+  window.addEventListener('scroll', updateBubblePosition);
+
+  // Initial position
+  updateBubblePosition();
+}
+
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
   renderAll();
   refreshIcons();
+  initFloatingBubbleTracking();
 });
-
