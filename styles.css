@@ -965,5 +965,318 @@ h6 {
 
 /* Utilities */
 .hidden {
-  display: none;
+  display: none !important;
+}
+
+/* ============================================
+   Floating Quote Bar (Always Visible)
+   ============================================ */
+.floating-quote-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(20, 20, 20, 0.95);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--gold-500);
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
+  box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.6);
+}
+
+.quote-bar-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.quote-bar-count {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.quote-bar-divider {
+  color: var(--border-color);
+}
+
+.quote-bar-total {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gold-400);
+  font-family: 'Noto Serif TC', serif;
+  text-shadow: 0 0 15px rgba(200, 170, 110, 0.3);
+}
+
+.quote-bar-btn {
+  background: linear-gradient(135deg, var(--gold-400) 0%, var(--gold-600) 100%);
+  color: var(--text-dark);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(200, 170, 110, 0.3);
+}
+
+.quote-bar-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(200, 170, 110, 0.5);
+}
+
+.quote-bar-btn i {
+  width: 18px;
+  height: 18px;
+}
+
+/* ============================================
+   Quote Modal
+   ============================================ */
+.quote-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(5px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.quote-modal {
+  background: var(--bg-card);
+  border: 1px solid var(--gold-500);
+  border-radius: var(--radius-xl);
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(200, 170, 110, 0.2);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.quote-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  background: rgba(200, 170, 110, 0.05);
+}
+
+.quote-modal-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--gold-100);
+  font-size: 1.2rem;
+}
+
+.quote-modal-header h2 i {
+  width: 24px;
+  height: 24px;
+  color: var(--gold-400);
+}
+
+.quote-modal-close {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+}
+
+.quote-modal-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+}
+
+.quote-modal-close i {
+  width: 20px;
+  height: 20px;
+}
+
+.quote-modal-body {
+  padding: 1.5rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.modal-cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.modal-cart-item:last-child {
+  border-bottom: none;
+}
+
+.modal-item-name {
+  color: var(--text-main);
+  font-size: 0.95rem;
+}
+
+.modal-item-detail {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.modal-item-price {
+  color: var(--gold-300);
+  font-family: 'Noto Serif TC', serif;
+  font-weight: 600;
+}
+
+.modal-cart-empty {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 2rem;
+}
+
+.modal-rush-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  margin-top: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-md);
+}
+
+.modal-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 1.5rem 0 0.5rem;
+  margin-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.modal-total-label {
+  color: var(--text-muted);
+}
+
+.modal-total-value {
+  font-size: 2rem;
+  color: var(--gold-400);
+  font-family: 'Noto Serif TC', serif;
+  font-weight: 700;
+  text-shadow: 0 0 20px rgba(200, 170, 110, 0.3);
+}
+
+.quote-modal-footer {
+  display: flex;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-top: 1px solid var(--border-color);
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.modal-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: var(--radius-full);
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.modal-btn i {
+  width: 18px;
+  height: 18px;
+}
+
+.modal-btn.primary {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.modal-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+}
+
+.modal-btn.secondary {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+}
+
+.modal-btn.secondary:hover {
+  border-color: var(--gold-400);
+  color: var(--gold-400);
+}
+
+/* Hide sidebar on mobile since we have floating bar now */
+@media (max-width: 1023px) {
+  .sidebar {
+    display: none;
+  }
+
+  body {
+    padding-bottom: 80px;
+    /* Space for floating bar */
+  }
+}
+
+/* Adjust floating bar for desktop */
+@media (min-width: 1024px) {
+  .floating-quote-bar {
+    left: auto;
+    right: 2rem;
+    bottom: 2rem;
+    width: auto;
+    border-radius: var(--radius-full);
+    padding: 0.75rem 0.75rem 0.75rem 1.5rem;
+    border: 1px solid var(--gold-500);
+  }
 }

@@ -585,28 +585,107 @@ function renderSummary() {
 
   refreshIcons();
 
-  // Render Sticky Footer
-  const footerHtml = `
-    <div class="sticky-footer">
-      <div class="footer-info">
-        <span class="footer-label">目前總計</span>
-        <span class="footer-total">$${formatNumber(total)}</span>
+  // Update Floating Quote Bar
+  updateFloatingQuoteBar();
+}
+
+function updateFloatingQuoteBar() {
+  const { cartItems, total } = calculateCart();
+  const itemCount = cartItems.reduce((sum, item) => sum + item.qty, 0);
+
+  const countEl = document.getElementById('quoteBarCount');
+  const totalEl = document.getElementById('quoteBarTotal');
+
+  if (countEl) countEl.textContent = `已選 ${itemCount} 項`;
+  if (totalEl) totalEl.textContent = `$${formatNumber(total)}`;
+
+  refreshIcons();
+}
+
+// ---------------------------------------------------------------------------
+// Quote Modal Functions
+// ---------------------------------------------------------------------------
+function openQuoteModal() {
+  const overlay = document.getElementById('quoteModalOverlay');
+  overlay.classList.remove('hidden');
+  renderQuoteModalContent();
+  refreshIcons();
+  document.body.style.overflow = 'hidden'; // Prevent background scroll
+}
+
+function closeQuoteModal() {
+  const overlay = document.getElementById('quoteModalOverlay');
+  overlay.classList.add('hidden');
+  document.body.style.overflow = ''; // Restore scroll
+}
+
+function renderQuoteModalContent() {
+  const { cartItems, subtotal, rushFee, total } = calculateCart();
+  const modalBody = document.getElementById('quoteModalBody');
+
+  if (cartItems.length === 0) {
+    modalBody.innerHTML = `
+      <div class="modal-cart-empty">
+        <p>尚未選擇任何項目</p>
+        <p>請從分類中選擇服務項目</p>
       </div>
-      <button class="footer-btn" onclick="document.getElementById('summaryPanel').scrollIntoView({behavior: 'smooth'})">
-        ${createIcon('chevron-up', 20)}
-        查看明細
-      </button>
+    `;
+    return;
+  }
+
+  let itemsHtml = cartItems.map(item => `
+    <div class="modal-cart-item">
+      <div>
+        <div class="modal-item-name">${item.name.split('｜')[0]}</div>
+        <div class="modal-item-detail">$${formatNumber(item.price)} × ${item.qty}</div>
+      </div>
+      <div class="modal-item-price">$${formatNumber(item.itemTotal)}</div>
+    </div>
+  `).join('');
+
+  modalBody.innerHTML = `
+    ${itemsHtml}
+    
+    ${isRush ? `
+      <div class="modal-rush-row">
+        <span>⚡ 急件處理 (+30%)</span>
+        <span class="modal-item-price">+$${formatNumber(rushFee)}</span>
+      </div>
+    ` : ''}
+    
+    <div class="modal-total-row">
+      <span class="modal-total-label">預估總計</span>
+      <span class="modal-total-value">$${formatNumber(total)}</span>
     </div>
   `;
+}
 
-  // Append sticky footer if it doesn't exist
-  if (!document.querySelector('.sticky-footer')) {
-    const mainWrapper = document.querySelector('.main-wrapper');
-    const footerContainer = document.createElement('div');
-    footerContainer.innerHTML = footerHtml;
-    document.body.appendChild(footerContainer.firstElementChild);
-  } else {
-    document.querySelector('.footer-total').textContent = `$${formatNumber(total)}`;
+async function captureModalQuote() {
+  const modal = document.querySelector('.quote-modal');
+  if (!modal) return;
+
+  try {
+    const canvas = await html2canvas(modal, {
+      backgroundColor: '#141414',
+      scale: 2,
+      useCORS: true,
+      logging: false
+    });
+
+    canvas.toBlob(function (blob) {
+      const link = document.createElement('a');
+      const date = new Date();
+      const dateStr = `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}`;
+      link.download = `FoodIn報價單_${dateStr}.png`;
+      link.href = URL.createObjectURL(blob);
+      link.click();
+      URL.revokeObjectURL(link.href);
+
+      alert('📸 報價單已儲存！\n\n請將圖片傳送至 LINE: @foodin');
+    }, 'image/png');
+  } catch (error) {
+    console.error('Screenshot error:', error);
+    alert('請使用手機或電腦的截圖功能保存此畫面');
   }
 }
 
@@ -625,4 +704,6 @@ function renderAll() {
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
   renderAll();
+  refreshIcons();
 });
+
