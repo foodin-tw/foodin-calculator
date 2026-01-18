@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FoodIn 透明報價單 - 專業餐飲視覺設計服務，價格透明，預算規劃一目了然">
+  <title>FoodIn 透明報價單 | 專業餐飲視覺設計</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- html2canvas for screenshot -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="app-container">
+    <div class="main-wrapper">
+      <!-- Header -->
+      <header class="header">
+        <h1 class="header-title">
+          FoodIn <span class="text-orange">透明報價單</span>
+        </h1>
+        <p class="header-subtitle">
+          專屬預算規劃｜價格透明，每一分投入都清晰可見。
+        </p>
+      </header>
+
+      <div class="content-layout">
+        <!-- Main Content Area -->
+        <main class="main-content">
+          <!-- Navigation Tabs -->
+          <nav class="nav-tabs" id="navTabs">
+            <!-- Tabs will be rendered by JS -->
+          </nav>
+
+          <!-- Content Panel -->
+          <div class="content-panel" id="contentPanel">
+            <!-- Content will be rendered by JS -->
+          </div>
+
+          <!-- Contact Info -->
+          <div class="contact-section">
+            <div class="contact-card">
+              <div class="contact-info">
+                <div class="contact-icon">
+                  <span class="line-badge">LINE</span>
+                </div>
+                <div class="contact-text">
+                  <h4>下一步：聯繫客服確認</h4>
+                  <p class="contact-id">ID: <strong>@foodin</strong></p>
+                  <p class="contact-hint">
+                    請將右側（或下方）的「透明報價單」截圖，傳送給我們。<br>
+                    我們將盡快為您安排製作檔期！
+                  </p>
+                </div>
+              </div>
+              <a href="#" class="btn-line" onclick="event.preventDefault(); alert('請開啟 LINE 搜尋 ID: @foodin');">
+                加入 LINE 好友
+              </a>
+            </div>
+          </div>
+        </main>
+
+        <!-- Sidebar / Summary -->
+        <aside class="sidebar">
+          <div class="summary-panel" id="summaryPanel">
+            <!-- Summary will be rendered by JS -->
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
