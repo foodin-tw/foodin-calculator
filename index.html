@@ -8,7 +8,6 @@
   <title>FoodIn 透明報價單 | 專業餐飲視覺設計</title>
 
   <!-- Google Fonts -->
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -40,20 +39,7 @@
         </p>
       </header>
 
-      <!-- Sticky Quote Summary (Always Visible at Top) -->
-      <div class="sticky-quote-summary" id="stickyQuoteSummary">
-        <div class="sticky-quote-left">
-          <span class="sticky-quote-label">目前報價</span>
-          <span class="sticky-quote-count" id="stickyQuoteCount">0 項</span>
-        </div>
-        <div class="sticky-quote-total" id="stickyQuoteTotal">$0</div>
-        <button class="sticky-quote-btn" onclick="openQuoteModal()">
-          <i data-lucide="file-text"></i>
-          查看報價單
-        </button>
-      </div>
-
-      <!-- Main Content Area (Single Column) -->
+      <!-- Main Content Area -->
       <main class="main-content-full">
         <!-- Navigation Tabs -->
         <nav class="nav-tabs" id="navTabs">
@@ -76,7 +62,7 @@
                 <h4>下一步：聯繫客服確認</h4>
                 <p class="contact-id">ID: <strong>@foodin</strong></p>
                 <p class="contact-hint">
-                  點擊上方「查看報價單」按鈕，即可截圖報價單傳送給我們！
+                  點擊右下角「金色圓點」查看報價單，即可截圖傳送給我們！
                 </p>
               </div>
             </div>
@@ -89,7 +75,14 @@
     </div>
   </div>
 
-
+  <!-- Floating Quote Button (AssistiveTouch Style) -->
+  <div class="floating-quote-bubble" id="floatingBubble" onclick="openQuoteModal()">
+    <div class="bubble-inner">
+      <i data-lucide="file-text"></i>
+      <span class="bubble-total" id="bubbleTotal">$0</span>
+    </div>
+    <div class="bubble-pulse"></div>
+  </div>
 
   <!-- Quote Modal -->
   <div class="quote-modal-overlay hidden" id="quoteModalOverlay" onclick="closeQuoteModal()">

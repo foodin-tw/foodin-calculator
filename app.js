@@ -510,20 +510,28 @@ function calculateCart() {
 }
 
 function renderSummary() {
-  // Just update the sticky quote summary
-  updateStickyQuoteSummary();
+  // Update the floating bubble
+  updateFloatingBubble();
 }
 
-function updateStickyQuoteSummary() {
+function updateFloatingBubble() {
   const { cartItems, total } = calculateCart();
   const itemCount = cartItems.reduce((sum, item) => sum + item.qty, 0);
 
-  // Update sticky summary at top
-  const countEl = document.getElementById('stickyQuoteCount');
-  const totalEl = document.getElementById('stickyQuoteTotal');
+  // Update floating bubble
+  const bubbleTotal = document.getElementById('bubbleTotal');
+  const bubble = document.getElementById('floatingBubble');
 
-  if (countEl) countEl.textContent = `${itemCount} 項`;
-  if (totalEl) totalEl.textContent = `$${formatNumber(total)}`;
+  if (bubbleTotal) bubbleTotal.textContent = `$${formatNumber(total)}`;
+
+  // Toggle empty state
+  if (bubble) {
+    if (itemCount === 0) {
+      bubble.classList.add('empty');
+    } else {
+      bubble.classList.remove('empty');
+    }
+  }
 
   refreshIcons();
 }

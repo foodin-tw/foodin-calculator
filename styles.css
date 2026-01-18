@@ -98,8 +98,6 @@ body {
   color: var(--text-main);
   line-height: 1.6;
   min-height: 100vh;
-  padding-bottom: 80px;
-  /* Space for sticky footer */
 }
 
 /* Typography for Headings - Serif for Premium Feel */
@@ -169,100 +167,121 @@ h6 {
 }
 
 /* ============================================
-   Sticky Quote Summary (Follows Scroll)
+   Floating Quote Bubble (AssistiveTouch Style)
    ============================================ */
-.sticky-quote-summary {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(20, 20, 20, 0.95);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--gold-500);
-  border-radius: var(--radius-xl);
-  padding: 1rem 1.5rem;
-  margin-bottom: 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(200, 170, 110, 0.1);
-}
-
-.sticky-quote-left {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.sticky-quote-label {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-}
-
-.sticky-quote-count {
-  color: var(--gold-300);
-  font-size: 0.9rem;
-  background: rgba(200, 170, 110, 0.15);
-  padding: 0.25rem 0.75rem;
-  border-radius: var(--radius-full);
-}
-
-.sticky-quote-total {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: var(--gold-400);
-  font-family: 'Noto Serif TC', serif;
-  text-shadow: 0 0 20px rgba(200, 170, 110, 0.3);
-  flex: 1;
-  text-align: center;
-}
-
-.sticky-quote-btn {
-  background: linear-gradient(135deg, var(--gold-400) 0%, var(--gold-600) 100%);
-  color: var(--text-dark);
-  border: none;
-  padding: 0.75rem 1.25rem;
-  border-radius: var(--radius-full);
-  font-weight: 700;
-  font-size: 0.9rem;
+.floating-quote-bubble {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(200, 170, 110, 0.3);
-  white-space: nowrap;
 }
 
-.sticky-quote-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(200, 170, 110, 0.5);
+.floating-quote-bubble:hover {
+  transform: scale(1.1);
 }
 
-.sticky-quote-btn i {
-  width: 18px;
-  height: 18px;
+.floating-quote-bubble:active {
+  transform: scale(0.95);
 }
 
-/* Mobile: Compact sticky bar */
+.bubble-inner {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold-400) 0%, var(--gold-600) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  box-shadow: 0 6px 25px rgba(200, 170, 110, 0.5),
+    0 0 0 4px rgba(200, 170, 110, 0.2);
+  position: relative;
+  z-index: 2;
+}
+
+.bubble-inner i {
+  width: 26px;
+  height: 26px;
+  color: var(--text-dark);
+}
+
+.bubble-total {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  font-family: 'Noto Serif TC', serif;
+}
+
+/* Pulse animation */
+.bubble-pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: var(--gold-400);
+  opacity: 0;
+  z-index: 1;
+  animation: pulse 2s ease-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.8);
+  }
+}
+
+/* Hide pulse when no items */
+.floating-quote-bubble.empty .bubble-pulse {
+  animation: none;
+  opacity: 0;
+}
+
+.floating-quote-bubble.empty .bubble-inner {
+  background: var(--bg-lighter);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.floating-quote-bubble.empty .bubble-inner i,
+.floating-quote-bubble.empty .bubble-total {
+  color: var(--text-muted);
+}
+
+/* Mobile adjustments */
 @media (max-width: 640px) {
-  .sticky-quote-summary {
-    padding: 0.75rem 1rem;
-    border-radius: var(--radius-lg);
+  .floating-quote-bubble {
+    bottom: 20px;
+    right: 20px;
   }
 
-  .sticky-quote-left {
-    display: none;
+  .bubble-inner {
+    width: 75px;
+    height: 75px;
   }
 
-  .sticky-quote-total {
-    font-size: 1.5rem;
-    text-align: left;
+  .bubble-pulse {
+    width: 75px;
+    height: 75px;
   }
 
-  .sticky-quote-btn {
-    padding: 0.6rem 1rem;
-    font-size: 0.85rem;
+  .bubble-inner i {
+    width: 22px;
+    height: 22px;
+  }
+
+  .bubble-total {
+    font-size: 0.8rem;
   }
 }
 
