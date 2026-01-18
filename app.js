@@ -155,19 +155,8 @@ function refreshIcons() {
 function renderNav() {
   const navContainer = document.getElementById('navTabs');
 
-  // Normal Tabs
-  let html = categories.map(cat => `
-    <button 
-      class="nav-tab ${activeTab === cat.id ? 'active' : ''}"
-      onclick="setActiveTab('${cat.id}')"
-    >
-      ${createIcon(cat.icon)}
-      ${cat.title.split('(')[0]}
-    </button>
-  `).join('');
-
-  // AI Tab
-  html += `
+  // AI Tab (First)
+  let html = `
     <button 
       class="nav-tab ai-tab ${activeTab === 'ai' ? 'active' : ''}"
       onclick="setActiveTab('ai')"
@@ -176,6 +165,17 @@ function renderNav() {
       AI 智能預算顧問
     </button>
   `;
+
+  // Normal Tabs
+  html += categories.map(cat => `
+    <button 
+      class="nav-tab ${activeTab === cat.id ? 'active' : ''}"
+      onclick="setActiveTab('${cat.id}')"
+    >
+      ${createIcon(cat.icon)}
+      ${cat.title.split('(')[0]}
+    </button>
+  `).join('');
 
   navContainer.innerHTML = html;
   refreshIcons();
