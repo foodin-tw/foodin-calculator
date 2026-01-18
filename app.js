@@ -3,7 +3,7 @@
 // ============================================
 
 // ---------------------------------------------------------------------------
-// Data Definition (Updated with originalPrice)
+// Data Definition (Reordered 4-6-5-2-3-1-7)
 // ---------------------------------------------------------------------------
 const categories = [
   {
@@ -24,21 +24,6 @@ const categories = [
     ]
   },
   {
-    id: 'combo',
-    title: '圖文懶人包 (超值)',
-    icon: 'gift',
-    features: [
-      "視覺與文案一次搞定",
-      "風格統一更具說服力",
-      "適合：新品上市 / 招牌推廣"
-    ],
-    items: [
-      { id: 'cb1', name: '圖文體驗組', price: 600, originalPrice: 750, desc: '1張設計圖 + 1則文案 (原價 $750，現省 $150)' },
-      { id: 'cb3', name: '招牌圖文組', price: 1650, desc: '3張設計圖 + 3則文案' },
-      { id: 'cb5', name: '人氣圖文組', price: 2600, desc: '5張設計圖 + 5則文案' },
-    ]
-  },
-  {
     id: 'copy',
     title: '美學文案撰寫',
     icon: 'file-text',
@@ -54,17 +39,37 @@ const categories = [
     ]
   },
   {
-    id: 'platform',
-    title: '外送平台專用套餐',
-    icon: 'shopping-cart',
+    id: 'combo',
+    title: '圖文懶人包 (超值)',
+    icon: 'gift',
     features: [
-      "專為 UberEats / Foodpanda 設計",
-      "含平台優化建議與標籤設定",
-      "提升店鋪搜尋曝光度"
+      "視覺與文案一次搞定",
+      "風格統一更具說服力",
+      "適合：新品上市 / 招牌推廣"
     ],
     items: [
-      { id: 'pl1', name: '【熱銷】入門套餐', price: 2500, desc: '3圖+3文+優化建議+標籤 ⭐' },
-      { id: 'pl2', name: '【菜單升級】完整套餐', price: 4500, desc: '6圖+6文+簡介+優化+標籤 🚀' },
+      { id: 'cb1', name: '圖文體驗組', price: 600, originalPrice: 750, desc: '1張設計圖 + 1則文案 (原價 $750，現省 $150)' },
+      { id: 'cb3', name: '招牌圖文組', price: 1650, desc: '3張設計圖 + 3則文案' },
+      { id: 'cb5', name: '人氣圖文組', price: 2600, desc: '5張設計圖 + 5則文案' },
+    ]
+  },
+  {
+    id: 'menu',
+    title: '菜單設計',
+    icon: 'book-open',
+    features: [
+      "專業排版與視覺設計",
+      "搭配高質感餐點圖片",
+      "提供印刷用高解析度檔案",
+      "可配合品牌風格客製化"
+    ],
+    items: [
+      { id: 'm1', name: '單頁菜單｜A4/A3', price: 2200, desc: '單面設計，含 5-8 道餐點排版' },
+      { id: 'm2', name: '折頁菜單｜對折/三折', price: 3500, desc: '雙面設計，含 10-15 道餐點排版' },
+      { id: 'm3', name: '精緻菜單本｜4-6頁', price: 5800, desc: '完整菜單本設計，含 20-30 道餐點' },
+      { id: 'm4', name: '豪華菜單本｜8-12頁', price: 9800, desc: '大型餐廳完整菜單，含 40+ 道餐點' },
+      { id: 'm5', name: '數位菜單｜QR Code版', price: 2800, desc: '手機瀏覽優化，含 QR Code 設計' },
+      { id: 'm6', name: '電視牆菜單｜橫式看板', price: 3500, desc: '店內電視牆/LED 看板專用設計' },
     ]
   },
   {
@@ -83,6 +88,20 @@ const categories = [
       { id: 'v4', name: '店內電視牆版 (30秒)', price: 4800, desc: '含字幕設計 (5-6道菜)' },
       { id: 'v5', name: '店內電視牆版 (60秒)', price: 6500, desc: '含字幕設計 (7-10道菜)' },
       { id: 'v6', name: '品牌形象影片 (60秒)', price: 7200, desc: '含片頭片尾動畫 (8-10道菜)' },
+    ]
+  },
+  {
+    id: 'platform',
+    title: '外送平台專用套餐',
+    icon: 'shopping-cart',
+    features: [
+      "專為 UberEats / Foodpanda 設計",
+      "含平台優化建議與標籤設定",
+      "提升店鋪搜尋曝光度"
+    ],
+    items: [
+      { id: 'pl1', name: '【熱銷】入門套餐', price: 2500, desc: '3圖+3文+優化建議+標籤 ⭐' },
+      { id: 'pl2', name: '【菜單升級】完整套餐', price: 4500, desc: '6圖+6文+簡介+優化+標籤 🚀' },
     ]
   },
   {
@@ -107,44 +126,155 @@ const categories = [
 // ---------------------------------------------------------------------------
 let quantities = {};
 let isRush = false;
-let activeTab = 'photo';
+let activeTab = 'photo'; // Default: First item (Photo)
 let aiConsultantInput = '';
 let aiConsultantResult = '';
 let isAiLoading = false;
 
 // ---------------------------------------------------------------------------
-// DOM Elements
-// ---------------------------------------------------------------------------
-const navTabsEl = document.getElementById('navTabs');
-const contentPanelEl = document.getElementById('contentPanel');
-const summaryPanelEl = document.getElementById('summaryPanel');
-
-// ---------------------------------------------------------------------------
-// Utility Functions
+// Helper Functions
 // ---------------------------------------------------------------------------
 function formatNumber(num) {
-  return num.toLocaleString('zh-TW');
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-function createIcon(name, size = 20) {
-  return `<i data-lucide="${name}" style="width: ${size}px; height: ${size}px;"></i>`;
+function createIcon(name, size = 16) {
+  // Lucide icons are rendered by the script, but we can use helper
+  return `<i data-lucide="${name}" width="${size}" height="${size}"></i>`;
 }
 
 function refreshIcons() {
-  lucide.createIcons();
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
 }
 
 // ---------------------------------------------------------------------------
-// Handlers
+// Render Functions
 // ---------------------------------------------------------------------------
-function updateQuantity(id, delta) {
-  const current = quantities[id] || 0;
+function renderNav() {
+  const navContainer = document.getElementById('navTabs');
+
+  // Normal Tabs
+  let html = categories.map(cat => `
+    <button 
+      class="nav-tab ${activeTab === cat.id ? 'active' : ''}"
+      onclick="setActiveTab('${cat.id}')"
+    >
+      ${createIcon(cat.icon)}
+      ${cat.title.split('(')[0]}
+    </button>
+  `).join('');
+
+  // AI Tab
+  html += `
+    <button 
+      class="nav-tab ai-tab ${activeTab === 'ai' ? 'active' : ''}"
+      onclick="setActiveTab('ai')"
+    >
+      ${createIcon('bot')}
+      AI 智能預算顧問
+    </button>
+  `;
+
+  navContainer.innerHTML = html;
+  refreshIcons();
+}
+
+function renderContent() {
+  const container = document.getElementById('contentPanel');
+
+  if (activeTab === 'ai') {
+    renderAiPanel(container);
+    return;
+  }
+
+  const category = categories.find(c => c.id === activeTab);
+  if (!category) return;
+
+  const featuresHtml = category.features.map(f => `
+    <div class="feature-item">
+      ${createIcon('check', 14)}
+      <span>${f}</span>
+    </div>
+  `).join('');
+
+  const itemsHtml = category.items.map(item => {
+    const qty = quantities[item.id] || 0;
+    const isSelected = qty > 0;
+    const hasDiscount = item.originalPrice && item.originalPrice > item.price;
+
+    return `
+      <div class="product-item ${isSelected ? 'selected' : ''}">
+        <div class="product-info">
+          <div class="product-name">
+            ${item.name}
+            ${hasDiscount ? `<span class="discount-badge">省 $${item.originalPrice - item.price}</span>` : ''}
+          </div>
+          <div class="product-desc">${item.desc}</div>
+        </div>
+        
+        <div class="product-actions">
+           <!-- Price Display -->
+          <div class="price-container">
+            ${hasDiscount ? `<span class="original-price">$${formatNumber(item.originalPrice)}</span>` : ''}
+            <span class="current-price ${hasDiscount ? 'discounted' : ''}">$${formatNumber(item.price)}</span>
+          </div>
+
+          <!-- Quantity Control -->
+          <div class="qty-control">
+            <button 
+              class="qty-btn" 
+              onclick="updateQty('${item.id}', -1)"
+              ${qty === 0 ? 'disabled' : ''}
+            >
+              ${createIcon('minus', 14)}
+            </button>
+            <div class="qty-value">${qty}</div>
+            <button 
+              class="qty-btn add" 
+              onclick="updateQty('${item.id}', 1)"
+            >
+              ${createIcon('plus', 14)}
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  container.innerHTML = `
+    <div class="category-header">
+      <h2 class="category-title">
+        ${createIcon(category.icon, 24)}
+        ${category.title}
+      </h2>
+      <div class="features-box">
+        <span class="features-label">服務特色</span>
+        <div class="features-grid">
+          ${featuresHtml}
+        </div>
+      </div>
+    </div>
+    <div class="product-list">
+      ${itemsHtml}
+    </div>
+  `;
+
+  refreshIcons();
+}
+
+// ---------------------------------------------------------------------------
+// Business Logic
+// ---------------------------------------------------------------------------
+function updateQty(itemId, delta) {
+  const current = quantities[itemId] || 0;
   const next = Math.max(0, current + delta);
 
   if (next === 0) {
-    delete quantities[id];
+    delete quantities[itemId];
   } else {
-    quantities[id] = next;
+    quantities[itemId] = next;
   }
 
   renderAll();
@@ -190,7 +320,7 @@ async function captureAndDownload() {
 
     // Capture the summary panel
     const canvas = await html2canvas(panel, {
-      backgroundColor: '#111827',
+      backgroundColor: '#141414', // Match card background
       scale: 2, // Higher resolution
       useCORS: true,
       logging: false
@@ -232,259 +362,151 @@ async function callGemini(prompt) {
     return "請設定 API Key 以啟用 AI 功能。您可以在 app.js 中設定 apiKey 變數。";
   }
 
-  isAiLoading = true;
-  renderContent();
+  const systemPrompt = `
+    你現在是 FoodIn 的專業報價顧問。
+    我們的服務項目包括：
+    ${categories.map(c => `- ${c.title}`).join('\n')}
+    
+    請根據用戶的需求，推薦適合的服務組合。
+    請用友善、專業的語氣回答。
+    回答請包含：
+    1. 分析用戶需求
+    2. 推薦的具體方案 (從我們的清單中選擇)
+    3. 預估預算範圍
+    
+    請保持回答簡潔有力，重點清晰。
+  `;
+
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`;
 
   try {
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }]
-        })
-      }
-    );
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        contents: [{
+          parts: [{
+            text: `${systemPrompt}\n\n用戶需求：${prompt}`
+          }]
+        }]
+      })
+    });
+
     const data = await response.json();
-    isAiLoading = false;
-    return data.candidates?.[0]?.content?.parts?.[0]?.text || "抱歉，AI 暫時無法回應，請稍後再試。";
+    return data.candidates[0].content.parts[0].text;
   } catch (error) {
-    console.error("AI Error:", error);
-    isAiLoading = false;
-    return "連線錯誤，請檢查網路狀態。";
+    console.error('Gemini API Error:', error);
+    return "抱歉，AI 顧問目前忙碌中，請稍後再試，或直接聯繫客服人員。";
   }
 }
 
-async function handleConsultant() {
-  const input = document.getElementById('aiConsultantInput');
-  if (!input || !input.value.trim()) return;
+async function handleAiSubmit() {
+  if (!aiConsultantInput.trim()) return;
 
-  aiConsultantInput = input.value.trim();
+  isAiLoading = true;
+  renderContent(); // Update loading state
 
-  const serviceContext = categories.map(c =>
-    `${c.title}: ${c.items.map(i => `${i.name} ($${i.price})`).join(', ')}`
-  ).join('\n');
+  const result = await callGemini(aiConsultantInput);
 
-  const prompt = `
-    你是一位 FoodIn 設計行銷公司的「智能預算顧問」。
-    以下是我們提供的服務價目表：
-    ${serviceContext}
+  aiConsultantResult = result;
+  isAiLoading = false;
+  renderContent(); // Show result
+}
 
-    客戶的需求或情境是：
-    "${aiConsultantInput}"
-
-    請根據客戶的需求：
-    1. 推薦最適合的 1-2 個方案組合。
-    2. 估算大概的預算範圍。
-    3. 語氣親切專業，並鼓勵他們聯絡客服 (LINE: @foodin)。
-    4. 回答請控制在 150 字以內，條列式重點即可。
+function renderAiPanel(container) {
+  container.innerHTML = `
+    <div class="ai-panel">
+      <div class="ai-header">
+        ${createIcon('bot', 32)}
+        <h3>FoodIn 智能預算顧問</h3>
+      </div>
+      
+      <div class="ai-consultant-box">
+        <div class="ai-consultant-title">
+          ${createIcon('sparkles', 18)}
+          不知道該選哪個方案？
+        </div>
+        <div class="ai-consultant-desc">
+          請在下方告訴我您的需求，例如：<br>
+          <span class="hint">「我是賣健康餐盒的，預算大約 2000 元」或「想要升級外送平台菜單，希望看起來高級一點」。</span><br>
+          我將為您推薦最適合的 FoodIn 服務組合！
+        </div>
+        
+        <div class="ai-input-group">
+          <input 
+            type="text" 
+            class="ai-input" 
+            placeholder="請輸入您的需求..." 
+            value="${aiConsultantInput}"
+            oninput="aiConsultantInput = this.value"
+            onkeypress="if(event.key === 'Enter') handleAiSubmit()"
+            ${isAiLoading ? 'disabled' : ''}
+          >
+          <button 
+            class="ai-submit-btn" 
+            onclick="handleAiSubmit()"
+            ${isAiLoading ? 'disabled' : ''}
+          >
+            ${isAiLoading ? '思考中...' : '諮詢' + createIcon('send', 16)}
+          </button>
+        </div>
+      </div>
+      
+      <div class="ai-result ${!aiConsultantResult && !isAiLoading ? 'hidden' : ''}">
+        <div class="ai-result-inner">
+          <div class="ai-avatar">
+            ${createIcon('bot', 24)}
+          </div>
+          <div class="ai-result-content">
+            <div class="ai-result-title">顧問建議方案</div>
+            <div class="ai-result-text">
+              ${isAiLoading ? 'AI 正在分析您的需求，請稍候...' : marked.parse(aiConsultantResult)}
+            </div>
+            ${!isAiLoading && aiConsultantResult ? `
+              <div class="ai-result-actions">
+                <a class="ai-result-link" onclick="setActiveTab('photo')">
+                  採納此建議並諮詢客服 →
+                </a>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      </div>
+    </div>
   `;
 
-  aiConsultantResult = await callGemini(prompt);
-  renderContent();
+  refreshIcons();
 }
 
 // ---------------------------------------------------------------------------
-// Calculations
+// Cart Logic
 // ---------------------------------------------------------------------------
 function calculateCart() {
+  let cartItems = [];
   let subtotal = 0;
-  const items = [];
 
   categories.forEach(cat => {
     cat.items.forEach(item => {
       const qty = quantities[item.id] || 0;
       if (qty > 0) {
-        const itemTotal = qty * item.price;
+        const itemTotal = item.price * qty;
         subtotal += itemTotal;
-        items.push({
+        cartItems.push({
           ...item,
+          category: cat.title.split('(')[0],
           qty,
-          itemTotal,
-          category: cat.title.split(' (')[0]
+          itemTotal
         });
       }
     });
   });
 
   const rushFee = isRush ? Math.round(subtotal * 0.3) : 0;
-  const total = Math.max(0, subtotal + rushFee);
+  const total = subtotal + rushFee;
 
-  return { cartItems: items, subtotal, rushFee, total };
-}
-
-// ---------------------------------------------------------------------------
-// Render Functions
-// ---------------------------------------------------------------------------
-function renderNavTabs() {
-  let html = `
-    <button class="nav-tab ai-tab ${activeTab === 'ai' ? 'active' : ''}" onclick="setActiveTab('ai')">
-      ${createIcon('bot', 16)}
-      AI 預算顧問
-    </button>
-  `;
-
-  categories.forEach(cat => {
-    const shortTitle = cat.title.split(' ')[0];
-    html += `
-      <button class="nav-tab ${activeTab === cat.id ? 'active' : ''}" onclick="setActiveTab('${cat.id}')">
-        ${createIcon(cat.icon, 16)}
-        ${shortTitle}
-      </button>
-    `;
-  });
-
-  navTabsEl.innerHTML = html;
-}
-
-function renderAIPanel() {
-  return `
-    <div class="ai-panel">
-      <div class="ai-header">
-        ${createIcon('bot', 24)}
-        <h3>FoodIn 智能預算顧問</h3>
-      </div>
-
-      <div class="ai-consultant-box">
-        <h4 class="ai-consultant-title">
-          ${createIcon('sparkles', 16)} 不知道該選哪個方案？
-        </h4>
-        <p class="ai-consultant-desc">
-          請在下方告訴我您的需求，例如：<br>
-          <span class="hint">「我是賣健康餐盒的，預算大約 2000 元」</span> 或 <span class="hint">「想要升級外送平台菜單，希望看起來高級一點」</span>。<br>
-          我將為您推薦最適合的 FoodIn 服務組合！
-        </p>
-        <div class="ai-input-group">
-          <input
-            type="text"
-            id="aiConsultantInput"
-            value="${aiConsultantInput}"
-            placeholder="請輸入您的需求與預算..."
-            class="ai-input"
-            onkeydown="if(event.key === 'Enter') handleConsultant()"
-          >
-          <button
-            onclick="handleConsultant()"
-            ${isAiLoading ? 'disabled' : ''}
-            class="ai-submit-btn"
-          >
-            ${isAiLoading ? createIcon('loader-2', 18) + '<span class="spinner"></span>' : createIcon('send', 18)}
-            諮詢
-          </button>
-        </div>
-      </div>
-
-      ${aiConsultantResult ? `
-        <div class="ai-result">
-          <div class="ai-result-inner">
-            <div class="ai-avatar">
-              ${createIcon('bot', 24)}
-            </div>
-            <div class="ai-result-content">
-              <h5 class="ai-result-title">顧問建議方案</h5>
-              <div class="ai-result-text">${aiConsultantResult}</div>
-              <div class="ai-result-actions">
-                <span class="ai-result-link" onclick="alert('建議您截圖此畫面，直接諮詢客服 LINE: @foodin')">
-                  採納此建議並諮詢客服 →
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      ` : ''}
-    </div>
-  `;
-}
-
-function renderProductList() {
-  const category = categories.find(c => c.id === activeTab);
-  if (!category) return '';
-
-  const featuresHtml = category.features.map(f => `
-    <div class="feature-item">
-      ${createIcon('check-circle-2', 16)}
-      <span>${f}</span>
-    </div>
-  `).join('');
-
-  const productsHtml = category.items.map(item => {
-    const qty = quantities[item.id] || 0;
-    const hasDiscount = !!item.originalPrice;
-
-    return `
-      <div class="product-item ${qty > 0 ? 'selected' : ''}">
-        <div class="product-info">
-          <div class="product-header">
-            <h4 class="product-name">
-              ${item.name}
-              ${hasDiscount ? '<span class="discount-badge">優惠中</span>' : ''}
-            </h4>
-            <!-- Mobile Price -->
-            <div class="product-price-mobile">
-              ${hasDiscount ? `<span class="original-price">$${formatNumber(item.originalPrice)}</span>` : ''}
-              <span class="current-price ${hasDiscount ? 'discounted' : ''}">$${formatNumber(item.price)}</span>
-            </div>
-          </div>
-          <p class="product-desc">${item.desc}</p>
-        </div>
-        
-        <div class="product-actions">
-          <!-- Desktop Price -->
-          <div class="product-price-desktop">
-            ${hasDiscount ? `<span class="original-price">$${formatNumber(item.originalPrice)}</span>` : ''}
-            <span class="current-price ${hasDiscount ? 'discounted' : ''}">$${formatNumber(item.price)}</span>
-          </div>
-          
-          <div class="qty-control">
-            <button 
-              class="qty-btn"
-              onclick="updateQuantity('${item.id}', -1)"
-              ${qty === 0 ? 'disabled' : ''}
-            >
-              ${createIcon('minus', 16)}
-            </button>
-            <span class="qty-value">${qty}</span>
-            <button 
-              class="qty-btn add"
-              onclick="updateQuantity('${item.id}', 1)"
-            >
-              ${createIcon('plus', 16)}
-            </button>
-          </div>
-        </div>
-      </div>
-    `;
-  }).join('');
-
-  return `
-    <div class="category-header">
-      <h3 class="category-title">
-        ${createIcon(category.icon, 20)}
-        ${category.title}
-      </h3>
-      
-      <div class="features-box">
-        <h4 class="features-label">服務內容包含</h4>
-        <div class="features-grid">
-          ${featuresHtml}
-        </div>
-      </div>
-    </div>
-
-    <div class="product-list">
-      ${productsHtml}
-    </div>
-  `;
-}
-
-function renderContent() {
-  if (activeTab === 'ai') {
-    contentPanelEl.innerHTML = renderAIPanel();
-  } else {
-    contentPanelEl.innerHTML = renderProductList();
-  }
-  refreshIcons();
+  return { cartItems, subtotal, rushFee, total };
 }
 
 function renderSummary() {
@@ -515,44 +537,41 @@ function renderSummary() {
     `).join('');
   }
 
-  const footerHtml = cartItems.length > 0 ? `
-    <div class="summary-footer">
-      <div class="summary-row subtotal">
-        <span>小計</span>
-        <span>$${formatNumber(subtotal)}</span>
+  const summaryPanel = document.getElementById('summaryPanel');
+  summaryPanel.innerHTML = `
+    <div class="summary-header">
+      <div class="summary-title">
+        ${createIcon('file-text', 20)}
+        預估報價單
       </div>
+      ${cartItems.length > 0 ? `
+        <button class="clear-btn" onclick="resetCart()">
+          ${createIcon('trash-2', 14)} 清空
+        </button>
+      ` : ''}
+    </div>
 
+    <div class="cart-items">
+      ${cartHtml}
+    </div>
+
+    <div class="summary-footer">
       <div class="rush-row">
         <label class="rush-label">
-          <input 
-            type="checkbox" 
-            class="rush-checkbox"
-            ${isRush ? 'checked' : ''}
-            onchange="toggleRush(this.checked)"
-          >
-          <span class="rush-text">
-            ${createIcon('zap', 14)}
-            急件處理 (+30%)
-          </span>
+          <input type="checkbox" class="rush-checkbox" onchange="toggleRush(this.checked)" ${isRush ? 'checked' : ''}>
+          <div class="rush-text">
+            ${createIcon('zap', 16, isRush ? 'active' : '')}
+            <span>急件處理 (24h)</span>
+          </div>
         </label>
         ${isRush ? `<span class="rush-fee">+$${formatNumber(rushFee)}</span>` : ''}
       </div>
 
-      <div class="referral-box">
-        ${createIcon('gift', 16)}
-        <div>
-          <span class="referral-title">🎁 推薦獎勵優惠</span>
-          <p class="referral-desc">
-            若您有推薦人，截圖私訊確認後可享 <span class="referral-highlight">$100 折扣</span>！
-          </p>
-        </div>
-      </div>
-
       <div class="total-row">
-        <span class="total-label">總計預估</span>
+        <span class="total-label">預估總計</span>
         <span class="total-value">$${formatNumber(total)}</span>
       </div>
-      
+
       <button 
         class="submit-btn"
         onclick="captureAndDownload()"
@@ -562,40 +581,48 @@ function renderSummary() {
       </button>
       <p class="submit-note">點擊後自動下載報價單圖片</p>
     </div>
-  ` : '';
-
-  summaryPanelEl.innerHTML = `
-    <div class="summary-header">
-      <h2 class="summary-title">
-        ${createIcon('file-check', 20)}
-        透明報價單
-      </h2>
-      ${cartItems.length > 0 ? `
-        <button class="clear-btn" onclick="resetCart()">
-          ${createIcon('trash-2', 12)} 清空
-        </button>
-      ` : ''}
-    </div>
-
-    <div class="cart-items">
-      ${cartHtml}
-    </div>
-
-    ${footerHtml}
   `;
 
   refreshIcons();
+
+  // Render Sticky Footer
+  const footerHtml = `
+    <div class="sticky-footer">
+      <div class="footer-info">
+        <span class="footer-label">目前總計</span>
+        <span class="footer-total">$${formatNumber(total)}</span>
+      </div>
+      <button class="footer-btn" onclick="document.getElementById('summaryPanel').scrollIntoView({behavior: 'smooth'})">
+        ${createIcon('chevron-up', 20)}
+        查看明細
+      </button>
+    </div>
+  `;
+
+  // Append sticky footer if it doesn't exist
+  if (!document.querySelector('.sticky-footer')) {
+    const mainWrapper = document.querySelector('.main-wrapper');
+    const footerContainer = document.createElement('div');
+    footerContainer.innerHTML = footerHtml;
+    document.body.appendChild(footerContainer.firstElementChild);
+  } else {
+    document.querySelector('.footer-total').textContent = `$${formatNumber(total)}`;
+  }
 }
 
 function renderAll() {
-  renderNavTabs();
+  renderNav();
   renderContent();
   renderSummary();
 }
 
 // ---------------------------------------------------------------------------
-// Initialize
+// Setup & Init
 // ---------------------------------------------------------------------------
+// Marked.js is loaded from CDN in HTML
+// Lucide is loaded from CDN in HTML
+
+// Initialize
 document.addEventListener('DOMContentLoaded', () => {
   renderAll();
 });
